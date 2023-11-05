@@ -1,7 +1,7 @@
 # Aplicación de Gestión de Películas con Autenticación JWT
 
 **Descripción del repositorio**
-- Este proyecto tiene como objetivo desarrollar una aplicación web de gestión de películas que incluye un sistema de autenticación segura mediante JSON Web Tokens (JWT). La aplicación se divide en dos componentes principales: el frontend desarrollado con React.js y Material-UI, y el backend implementado con Express.js. A continuación, se detalla cada uno de los componentes:
+- Este proyecto tiene como objetivo desarrollar una aplicación web de gestión de películas que incluye un sistema de autenticación segura mediante JSON Web Tokens (JWT). La aplicación se divide en dos componentes principales: el frontend desarrollado con React.js y Material-UI, y el backend implementado con Express.js.
 
 **Meta**
 - El objetivo principal de este proyecto es desarrollar una aplicación web de gestión de películas con un sistema de autenticación seguro basado en JWT. La aplicación estará destinada a usuarios que deseen gestionar una base de datos de películas, permitiéndoles crear, leer, actualizar y eliminar registros de películas. Este proyecto tiene como meta principal la satisfacción de los siguientes objetivos:
