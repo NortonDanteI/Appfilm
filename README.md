@@ -11,12 +11,9 @@ Creación de una interfaz de usuario amigable y atractiva para facilitar la gest
 **Frontend (React.js y Material-UI):**
 
 - El frontend de la aplicación es la interfaz de usuario que los usuarios utilizarán para acceder a las funcionalidades de gestión de películas. Estará compuesto por varias páginas y componentes, incluyendo:
-
-- Página de inicio de sesión: Los usuarios deben autenticarse para acceder a las características de gestión de películas. Aquí, ingresarán su nombre de usuario y contraseña.
-
-- Página de registro: Los nuevos usuarios podrán crear cuentas proporcionando la información necesaria, que incluye nombre de usuario y contraseña.
-
-- Página de gestión de películas (CRUD): Una vez autenticados, los usuarios podrán realizar las siguientes operaciones:
+  - Página de inicio de sesión: Los usuarios deben autenticarse para acceder a las características de gestión de películas. Aquí, ingresarán su nombre de usuario y contraseña.
+  - Página de registro: Los nuevos usuarios podrán crear cuentas proporcionando la información necesaria, que incluye nombre de usuario y contraseña.
+  - Página de gestión de películas (CRUD): Una vez autenticados, los usuarios podrán realizar las siguientes operaciones:
 
 - Crear nuevas películas, proporcionando información como título, director, género, año de lanzamiento, etc.
 Leer y ver la lista de películas existentes.
