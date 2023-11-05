@@ -14,11 +14,10 @@ Creación de una interfaz de usuario amigable y atractiva para facilitar la gest
   - Página de inicio de sesión: Los usuarios deben autenticarse para acceder a las características de gestión de películas. Aquí, ingresarán su nombre de usuario y contraseña.
   - Página de registro: Los nuevos usuarios podrán crear cuentas proporcionando la información necesaria, que incluye nombre de usuario y contraseña.
   - Página de gestión de películas (CRUD): Una vez autenticados, los usuarios podrán realizar las siguientes operaciones:
-
-- Crear nuevas películas, proporcionando información como título, director, género, año de lanzamiento, etc.
-Leer y ver la lista de películas existentes.
-Actualizar la información de películas existentes.
-Eliminar películas de la base de datos.
+  - Crear nuevas películas, proporcionando información como título, director, género, año de lanzamiento, etc.
+    - Leer y ver la lista de películas existentes.
+    - Actualizar la información de películas existentes.
+    - Eliminar películas de la base de datos.
 
 **Backend (Express.js):**
 - El backend de la aplicación es la parte que maneja las solicitudes de los usuarios y se comunica con la base de datos MariaDB utilizando el ORM Sequelize. Aquí, se gestionarán las siguientes funciones:
