@@ -4,9 +4,12 @@
 - Este proyecto tiene como objetivo desarrollar una aplicación web de gestión de películas que incluye un sistema de autenticación segura mediante JSON Web Tokens (JWT). La aplicación se divide en dos componentes principales: el frontend desarrollado con React.js y Material-UI, y el backend implementado con Express.js.
 
 **Meta**
-- El objetivo principal de este proyecto es desarrollar una aplicación web de gestión de películas con un sistema de autenticación seguro basado en JWT. La aplicación estará destinada a usuarios que deseen gestionar una base de datos de películas, permitiéndoles crear, leer, actualizar y eliminar registros de películas. Este proyecto tiene como meta principal la satisfacción de los siguientes objetivos:
-
-Creación de una interfaz de usuario amigable y atractiva para facilitar la gestión de películas. Implementación de una autenticación segura para proteger los datos y limitar el acceso solo a usuarios autorizados. Conexión con una base de datos MariaDB alojada en un contenedor Docker. Uso del ORM Sequelize para modelar y realizar consultas a la base de datos. Creación de un seeder para cargar un usuario por defecto en la base de datos.
+- La meta de este proyecto es desarrollar una aplicación web de gestión de películas con un sistema de autenticación seguro basado en JWT. La aplicación estará destinada a usuarios que deseen gestionar una base de datos de películas, permitiéndoles crear, leer, actualizar y eliminar registros de películas.
+- Se desglosan los siguientes objetivos:
+  - Creación de una interfaz de usuario amigable y atractiva para facilitar la gestión de películas.
+  - Implementación de una autenticación segura para proteger los datos y limitar el acceso solo a usuarios autorizados.
+  - Conexión con una base de datos MariaDB alojada en un contenedor Docker. Uso del ORM Sequelize para modelar y realizar consultas a la base de datos.
+  - Creación de un seeder para cargar un usuario por defecto en la base de datos.
 
 **Frontend (React.js y Material-UI):**
 
