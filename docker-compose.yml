@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: appfilm
+      # Por defecto hay un user llamado root y esta es su clave
+      MYSQL_ROOT_PASSWORD: contrasenia_root
+      # Este es el usuario que yo he definido
+      MYSQL_USER: root2 
+      MYSQL_PASSWORD: contrasenia_root2
+    ports:
+      - '4500:3306'
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root2
+      PMA_PASSWORD: contrasenia_root2
+    ports:
+      - '5000:80'
+
+volumes:
+  mariadb_data:
+  

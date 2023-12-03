@@ -1,0 +1,32 @@
+.fondo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  background-color: transparent;
+}
+
+.contenedor_centrado {
+  height: '100%'; 
+  width: '100%'; 
+  
+  background-color: 'red';
+}
+
+.contenedor_superior{ 
+  display: flex;
+  flex-direction: column;
+  height: 10%;
+  width: 100%;  
+
+  background-color: transparent;
+}
+
+.contenedor_inferior {
+  display: flex;
+  width: 100%;
+  height: 90%;
+
+  background-color: cyan;
+}

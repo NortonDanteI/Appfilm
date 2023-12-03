@@ -1,0 +1,27 @@
+.div_card {
+  display: flex;
+  flex-direction: row;
+  background-color: #000000;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  overflow: hidden; 
+  height: 100%;
+  width: 100%;
+}
+
+.div_boton {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+}
+
+.div_info {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  width: 50%;
+  height: 100%;
+  padding: 0px 5px 0px 5px; 
+}
+
