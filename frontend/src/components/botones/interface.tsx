@@ -9,6 +9,7 @@ interface RoundedButtonProps {
   llamada:string;
   texto:string;
   estilo:number;
+  onChange: (value: string) => void;
   // Puedes añadir otras propiedades específicas para RoundedButton aquí
 }
 

@@ -27,9 +27,12 @@ async function testing() {
 
 function iniciarServidor() {
   const corsOptions = {
-    origin: ['http://localhost:4000'],
+    origin: ['http://localhost:4000','http://localhost:3000'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,
+    optionsSuccessStatus: 204,
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,
   };
 
   const app = express();

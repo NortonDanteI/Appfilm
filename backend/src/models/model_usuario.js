@@ -118,16 +118,22 @@ class Usuario_model {
 
   async call_usuario_por_username(username) {
     console.log("Usuario_model; call_usuario_por_username(username)")
-    console.log("username: ", username)
+    console.log("username a buscar: ", username)
     try {
       const usuario = await this.Usuarios.findOne({
         where: {
           username,
         },
       });
-      return usuario.dataValues;
+      if (usuario) {
+        console.log("que es esto: ", usuario)
+        return usuario.dataValues;
+      } else {
+        // Manejar el caso en el que el usuario no fue encontrado
+        return null;
+      }
     } catch (error) {
-      console.error('Error al buscar usuario:', error.message);
+      console.error('Error al buscar usuario desde model_usuario.js:', error.message);
       throw error;
     }
   }

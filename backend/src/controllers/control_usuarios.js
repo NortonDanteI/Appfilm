@@ -13,7 +13,7 @@ class Control_usuario {
       const usuario = await model_usuario.call_usuario_por_username(username);
       return usuario;
     } catch (error) {
-      console.error('Error al buscar usuario:', error.message);
+      console.error('Error al buscar usuario desde controller:', error.message);
       throw error;
     }
   }
@@ -25,7 +25,6 @@ class Control_usuario {
       console.log("username: ", username);
   
       const usuario = await this.call_usuario_por_username(username);
-      /*console.log("usuario encontrado: ",usuario)*/
       if (usuario) {
         res.status(200).json({ success: true, mensaje: 'Usuario encontrado', resultado: usuario });
       } else {
@@ -68,30 +67,32 @@ class Control_usuario {
   
     try {
       const usuario = await this.call_usuario_por_username(username);
-      console.log("usuario encontrado: ", usuario);
-  
-      const contraseñaValida = await this.validar_contra(password, usuario);
-      console.log("contraseña valida: ", contraseñaValida);
-  
-      if (usuario && contraseñaValida) {
-        let rolesUsuario = roles[0];
-        if (rol === roles[1] && firma_recepcionada === process.env.JWT_SECRET) {
-          rolesUsuario = roles[1];
-        }
-  
-        const { id } = usuario;
-        console.log("El id del usuario encontrado es: ", id);
-        console.log("Rol asignado al usuario: ", rolesUsuario, "Inicio de sesion exitoso.");
-        console.log("------Datos del token-------")
-        console.log("id: ",id," usuario.username: ",usuario.username," rolesUsuario: ", rolesUsuario )
-
-        const token = jwt.sign({ userId: id, username: usuario.username, roles: rolesUsuario }, process.env.JWT_SECRET, { expiresIn: '24h' });
-        res.status(200).json({ success: true, message: 'Inicio de sesión exitoso', token });
+      if (usuario == null) {
+        console.log("El usuario encontrado ha sido null, devolviendo 401...");
+        res.status(401).json({ success: false, message: 'Usuario no encontrado...' });
       } else {
-        res.status(401).json({ success: false, message: 'Inicio de sesión rechazado' });
+        const contraseñaValida = await this.validar_contra(password, usuario);
+        console.log("contraseña valida: ", contraseñaValida);
+        if (contraseñaValida) {
+          let rolesUsuario = roles[0];
+          if (rol === roles[1] && firma_recepcionada === process.env.JWT_SECRET) {
+            rolesUsuario = roles[1];
+          }
+  
+          const { id } = usuario;
+          console.log("El id del usuario encontrado es: ", id);
+          console.log("Rol asignado al usuario: ", rolesUsuario, "Inicio de sesión exitoso.");
+          console.log("------Datos del token-------")
+          console.log("id: ", id, " usuario.username: ", usuario.username, " rolesUsuario: ", rolesUsuario)
+  
+          const token = jwt.sign({ userId: id, username: usuario.username, roles: rolesUsuario }, process.env.JWT_SECRET, { expiresIn: '24h' });
+          res.status(200).json({ success: true, message: 'Inicio de sesión exitoso', token });
+        } else {
+          res.status(401).json({ success: false, message: 'Inicio de sesión rechazado' });
+        }
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error('Error al iniciar sesión desde controller:', error);
       res.status(500).json({ success: false, message: 'Error al iniciar sesión' });
     }
   }
