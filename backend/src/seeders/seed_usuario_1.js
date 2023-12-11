@@ -6,12 +6,13 @@ class Seed_user {
   constructor() {
     this.username = 'usuario_1';
     this.contrasenia = 'contrasenia';
+    this.rol ='Admnistrador'
   }
 
   async up() {
     try {
       const hashContraseña = await bcrypt.hash(this.contrasenia, 10);
-      const result = await model_usuario.crear_usuario(this.username, hashContraseña);
+      const result = await model_usuario.crear_usuario(this.username, hashContraseña, this.rol);
       console.log('Seeder ejecutado con éxito.', result.uniqno);
     } catch (error) {
       console.error('Error al ejecutar el seeder:', error.message);

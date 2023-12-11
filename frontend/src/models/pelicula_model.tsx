@@ -1,46 +1,33 @@
 import Peliculas from "./interface_pelicula";
-
+import { Usuario_model } from "./usuario_model";
 
 export class Pelicula_model {
+  private backendUrl: string = "http://localhost:4000/api/peliculas/imprimir_registros";
 
-  private peliculas: Peliculas[] = [];
-
-  constructor(/* servicio de carga????*/) {
-    console.log("MODEL: Ingesta...")
+  constructor() {
+    console.log("MODEL: Pelicula...")
   }
 
-  get_peliculas(){
-    return this.peliculas;
-  }
+  async Cargar_peliculas(token:string): Promise<Response> {
+    console.log("MODEL: Usuario_model; FUNCTION: model_iniciar_sesion()");
+    const cabecera = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Agregamos el token de autorización
+    };
 
-  async model_Subir_pelicula(pelicula:Peliculas): Promise<boolean> {
-    
-    console.log("MODEL: Ingesta ; FUNCION: Obtener_ingesta()");
-    /*
-    return new Promise<boolean>((resolve, reject) => {
-      let token: string = this.auth.getToken();
-      const observable: Observable<any> = this.pelicula_bd.POST_ingesta(token,data);
-      observable.subscribe({
-        next: (data:any) => {
-          console.log("data pelicula: ", data);
-
-          if (data.success === true) {
-            resolve(true); // Resuelve la promesa con un valor si es necesario
-          } else {
-            reject(false); // Rechaza la promesa en caso de error
-          }
-        },
-        error: (error: any) => {
-          console.log(error)
-          reject(false); // Rechaza la promesa en caso de error
-        },
-        complete: () => {
-          console.log("completado con éxito la obtención de ingesta... ")
-        }
-      });
-    });
-    */
-   return true
+    const metodo = 'GET';
+    try {
+    const respuesta = await fetch(this.backendUrl, { method: metodo, headers: cabecera});
+      console.log("respuesta: ", respuesta)
+      if (!respuesta.ok) {
+        throw new Error(`Error al cargar peliculas: ${respuesta.status} - ${respuesta.statusText}`);
+      } else {
+        return respuesta;
+      }
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", /*error*/);
+      throw new Error("Error al cargar peliculas");
+    }
   }
 
 }

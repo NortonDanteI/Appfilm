@@ -60,9 +60,7 @@ class Control_usuario {
   
   async handle_login(req, res) {
     console.log("Control_usuario; handle_login()");
-    const roles = ['Regular', 'Administrador'];
-  
-    let { username, password, rol, firma_recepcionada } = req.body;
+    let { username, password} = req.body;
     console.log("req.body: ", req.body);
   
     try {
@@ -74,18 +72,10 @@ class Control_usuario {
         const contraseñaValida = await this.validar_contra(password, usuario);
         console.log("contraseña valida: ", contraseñaValida);
         if (contraseñaValida) {
-          let rolesUsuario = roles[0];
-          if (rol === roles[1] && firma_recepcionada === process.env.JWT_SECRET) {
-            rolesUsuario = roles[1];
-          }
-  
-          const { id } = usuario;
-          console.log("El id del usuario encontrado es: ", id);
-          console.log("Rol asignado al usuario: ", rolesUsuario, "Inicio de sesión exitoso.");
+          const { id, rol } = usuario;
           console.log("------Datos del token-------")
-          console.log("id: ", id, " usuario.username: ", usuario.username, " rolesUsuario: ", rolesUsuario)
-  
-          const token = jwt.sign({ userId: id, username: usuario.username, roles: rolesUsuario }, process.env.JWT_SECRET, { expiresIn: '24h' });
+          console.log("id: ", id, " usuario.username: ", usuario.username, " rol: ", rol)
+          const token = jwt.sign({ userId: id, username: usuario.username, roles: rol }, process.env.JWT_SECRET, { expiresIn: '24h' });
           res.status(200).json({ success: true, message: 'Inicio de sesión exitoso', token });
         } else {
           res.status(401).json({ success: false, message: 'Inicio de sesión rechazado' });
@@ -120,11 +110,11 @@ class Control_usuario {
   async handle_crear_usuario(req, res) {
     try {
       console.log("Informacion del body: ", req.body)
-      const { username, password } = req.body;
+      const { username, password, rol } = req.body;
       console.log("contraseña: ", username)
   
       const hashContraseña = await bcrypt.hash(password, 10);
-      const nuevoUsuario = await model_usuario.crear_usuario(username, hashContraseña);
+      const nuevoUsuario = await model_usuario.crear_usuario(username, hashContraseña, rol);
       res.status(201).json({ success:true, mensaje: 'Usuario creado con éxito', resultado: nuevoUsuario });
     } catch (error) {
       res.status(500).json({ success: false, mensaje: 'Error al crear usuario', error: error.message });

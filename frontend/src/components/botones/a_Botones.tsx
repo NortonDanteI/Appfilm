@@ -51,7 +51,6 @@ function Boton({ llamada, texto, estilo, usuarioData  }: InputCustomProps) {
     const usuario: Usuario_bd = {
       username: usuarioData.username,
       password: usuarioData.password,
-      rol: 'Regular',
     };
 
     console.log("usuario: ", usuario)

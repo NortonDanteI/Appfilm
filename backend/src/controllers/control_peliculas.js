@@ -66,8 +66,8 @@ class Control_peliculas {
     console.log("Control_peliculas; handle_crear_pelicula()")
     try {
       console.log("Informacion del body: ", req.body)
-      const { nombre, sinopsis, anio_lanzamiento } = req.body;
-      const nueva_pelicula = await model_peliculas.crear_registro(nombre, sinopsis, anio_lanzamiento );
+      const { ruta, nombre, sinopsis, anio_lanzamiento } = req.body;
+      const nueva_pelicula = await model_peliculas.crear_registro(ruta, nombre, sinopsis, anio_lanzamiento );
       res.status(201).json({ success:true, mensaje: 'pelicula registrada con éxito', resultado: nueva_pelicula });
     } catch (error) {
       res.status(500).json({ success: false, mensaje: 'Error al registrar pelicula', error: error.message });

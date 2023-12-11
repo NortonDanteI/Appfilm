@@ -22,6 +22,10 @@ class peliculas_model {
         primaryKey: true,
         autoIncrement: true,
       },
+      ruta: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       nombre: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -63,9 +67,10 @@ class peliculas_model {
     }
   }
   
-  async crear_registro(nombre, sinopsis, anio_lanzamiento) {
+  async crear_registro(ruta,nombre, sinopsis, anio_lanzamiento) {
     try {
       const nueva_pelicula = await this.peliculas.create({
+        ruta,
         nombre,
         sinopsis,
         anio_lanzamiento,

@@ -47,8 +47,7 @@ const actions = {
 
 for (const [key, { action, roles }] of Object.entries(actions)) {
   const [metodo, ruta] = key.split(' ');
-
-  const permiso = asignarPermiso(roles);
+  const permiso = asignarPermiso(roles);//middleware
   //console.log(`Configurando ruta ${metodo} ${ruta}, permiso necesario: ${permiso}`);
   
   if(permiso!='free'){

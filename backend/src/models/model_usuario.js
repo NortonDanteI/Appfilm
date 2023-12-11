@@ -40,6 +40,13 @@ class Usuario_model {
           validarLargo: this.validarLargo,
         },
       },
+      rol: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: false,
+        autoIncrement: false,
+        comment: null,
+      },
     });
   }
   
@@ -65,11 +72,12 @@ class Usuario_model {
     }
   }
   
-  async crear_usuario(username, password) {
+  async crear_usuario(username, password, rol) {
     try {
       const nuevoUsuario = await this.Usuarios.create({
         username,
         password,
+        rol,
       });
       return nuevoUsuario;
     } catch (error) {
