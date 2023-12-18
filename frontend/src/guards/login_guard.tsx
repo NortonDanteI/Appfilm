@@ -1,4 +1,4 @@
-// app/components/boton/boton.tsx
+//guards/login_guard.tsx
 'use client';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -27,7 +27,7 @@ function Login_guard({ children }: { children: React.ReactNode }) {
       if (user_model != undefined) {
         let data: Usuario_bd | null = user_model.get_user();
         console.log("Login_guard; obteniendo data del user: ", data)
-        
+
         if (data != null) {
           const result = await usuarioController.Iniciar_sesion(data);
           console.log("Login_guard; ¿valido para ir home?: ", result)
@@ -47,7 +47,7 @@ function Login_guard({ children }: { children: React.ReactNode }) {
     }
 
     fetchData();
-  }, []);
+  }, [router]);
 
   return (
     <>

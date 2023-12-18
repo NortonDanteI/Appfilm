@@ -1,11 +1,10 @@
 "use client"
 import './style.css';
-import { useRouter } from 'next/router';
 import { Boton } from '../components/botones/a_Botones';
 import { Input_custom } from '../components/inputs/a_inputs_';
 import { Tipografia1 } from '@/components/typographys/a_typographys_';
 import React, { useEffect, useRef, useState } from 'react';
-import Login_guard  from '@/guards/login_guard';
+import Login_guard from '@/guards/login_guard';
 
 // Estado para manejar los datos del usuario
 /*---------------------------------------- */
@@ -31,18 +30,18 @@ function Login() {
   }, [])
 
   return (
-    <div className="fondo">
-      <Login_guard >
-      <div className="contenedor_centrado">
-        <div className="formulario">
-          <Tipografia1 texto="AppFilm" estilo={1} />
-          <Input_custom texto={username} estilo={0} onChange={handleUsernameChange} />
-          <Input_custom texto={password} estilo={0} onChange={handlePasswordChange} />
-          <Boton llamada='ir_home_' texto="Iniciar sesión" estilo={1} usuarioData={{ username, password, rol: 'Regular' }} />
+    <Login_guard >
+      <div className="fondo">
+        <div className="contenedor_centrado">
+          <div className="formulario">
+            <Tipografia1 texto="AppFilm" estilo={1} />
+            <Input_custom texto={username} estilo={0} onChange={handleUsernameChange} />
+            <Input_custom texto={password} estilo={0} onChange={handlePasswordChange} />
+            <Boton llamada='ir_home_' texto="Iniciar sesión" estilo={1} usuarioData={{ username, password, rol: 'Regular' }} />
+          </div>
         </div>
       </div>
-      </Login_guard>
-    </div>
+    </Login_guard>
   );
 }
 
