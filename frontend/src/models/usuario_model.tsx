@@ -2,29 +2,24 @@ import { Response_login, Usuario_bd } from "./interface_usuario";
 
 export class Usuario_model {
   private backendUrl: string = "http://localhost:4000/api/usuario/login";
-  //username,password,rol,token,id
+  //username,password,rol?,token?,id?
   private datos: Usuario_bd;
 
   constructor(usuario_: Usuario_bd) {
     console.log("MODEL: Usuario_model...");
     this.datos = usuario_;
-    this.get_token();
   }
 
   async model_iniciar_sesion(): Promise<Response> {
     console.log("MODEL: Usuario_model; FUNCTION: model_iniciar_sesion()");
-    const { username, password, rol } = this.datos;
-    // debo quitar el rol y el registro debe traer incorporado el rol
-    const userJSON = JSON.stringify({ username, password, rol });
-    const cabecera = {'Content-Type': 'application/json'}; 
+    const { username, password } = this.datos;
+    const userJSON = JSON.stringify({ username, password });
+    const cabecera = { 'Content-Type': 'application/json' };
     const metodo = 'POST';
-    //http en angular
-    //fetch devuelve una promesa<Response>
     try {
       const respuesta = await fetch(this.backendUrl, { method: metodo, headers: cabecera, body: userJSON });
       console.log("respuesta: ", respuesta)
       if (!respuesta.ok) {
-        // Si la respuesta no está en el rango 200-299, lanzar un error
         throw new Error(`Error al iniciar sesión: ${respuesta.status} - ${respuesta.statusText}`);
       } else {
         return respuesta;
@@ -35,27 +30,33 @@ export class Usuario_model {
     }
   }
 
-  public save_token(token: string): void {
-    console.log("MODEL: Usuario_model; FUNCTION: save_token()");
-    this.datos.token=token;
-    localStorage.setItem("token", token);
-    const result=localStorage.getItem("token");
-    console.log("Se ha guardado el siguiente token: ", result)
+  public save_user(usuario: Usuario_bd): void {
+    console.log("MODEL: Usuario_model; FUNCTION: save_user()");
+    this.datos = usuario;
+    const usuarioJSON = JSON.stringify(this.datos);
+    localStorage.setItem('usuario', usuarioJSON);
+
   }
 
-  public get_token(): string {
-    console.log("MODEL: Usuario_model; FUNCTION: cargar_token()");
-    const result=localStorage.getItem("token");
-    if(result!=null){
-      console.log("El token es: ", result)
-      this.datos.token=result
-      return this.datos.token
+  public get_user(): Usuario_bd | null {
+    console.log("MODEL: Usuario_model; FUNCTION: get_user()");
+    const usuarioJSONStored : string | null = localStorage.getItem('usuario');
+    console.log("usuarioJSONStored: ", usuarioJSONStored)
+    if (usuarioJSONStored) {
+      // Parsear la cadena JSON de nuevo a un objeto Usuario_bd
+      const usuarioStored: Usuario_bd = JSON.parse(usuarioJSONStored);
+      console.log(usuarioStored.username);
+      console.log(usuarioStored.password);
+      console.log(usuarioStored.rol);
+      console.log(usuarioStored.token);
+      console.log(usuarioStored.id);
+
+      return usuarioStored
     } else {
-      console.log("El token es: ", result)
-      return ""
+      console.log('No se encontró información del usuario en localStorage');
+      return null
     }
   }
-  
-  
+
 }
 

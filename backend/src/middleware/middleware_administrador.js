@@ -16,11 +16,13 @@ class Middleware_administrador {
   configurar_devolucion(req, res, next) {
 
     const devolucion = function (error, token_deco) {
+      console.log("Informacion del token: ", token_deco);
+      
       if (error) {
+        console.log("Token inválido");
         return res.status(401).json({ mensaje: 'Token inválido' });
       }
 
-      console.log("Informacion del token: ", token_deco);
       req.usuario = token_deco;
       const { roles } = req.usuario;
 
@@ -41,6 +43,7 @@ class Middleware_administrador {
     if (!token) {
       return res.status(401).json({ mensaje: 'Token no proporcionado' });
     }
+    console.log("token recepcionado: ", token)
     const tokenSinBearer = token.replace("Bearer ", "");
     jwt.verify(tokenSinBearer, this.secreto, this.configurar_devolucion(req, res, next));
   }

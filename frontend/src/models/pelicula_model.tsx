@@ -1,5 +1,4 @@
-import Peliculas from "./interface_pelicula";
-import { Usuario_model } from "./usuario_model";
+import Pelicula from "./interface_pelicula";
 
 export class Pelicula_model {
   private backendUrl: string = "http://localhost:4000/api/peliculas/imprimir_registros";
@@ -10,6 +9,8 @@ export class Pelicula_model {
 
   async Cargar_peliculas(token:string): Promise<Response> {
     console.log("MODEL: Usuario_model; FUNCTION: model_iniciar_sesion()");
+    console.log("token de la cabecera: ",token)
+
     const cabecera = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}` // Agregamos el token de autorización

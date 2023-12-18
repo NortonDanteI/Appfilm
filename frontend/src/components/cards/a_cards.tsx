@@ -37,7 +37,7 @@ function CustomCard({ llamada, pelicula, estilo }: Props) {
     </article>
   );
 }
-
+//quede aqui error pelicula.ruta
 function CustomCard_register({llamada, pelicula }: Props1) {
   return (
     <article className={style.div_card}>

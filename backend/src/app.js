@@ -30,9 +30,7 @@ function iniciarServidor() {
     origin: ['http://localhost:4000','http://localhost:3000'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,
-    optionsSuccessStatus: 204,
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true,
+    allowedHeaders: 'Content-Type, Authorization',
   };
 
   const app = express();

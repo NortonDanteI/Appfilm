@@ -7,22 +7,23 @@ import { ImageButtonProps, Mapeo_de_funciones } from './interface';
 import { plantilla_tipo_1, plantilla_boton } from './b_style'
 import { useRouter } from 'next/navigation';
 import { Usuario_bd } from '@/models/interface_usuario';
-import { Usuario_controller } from '@/controllers/usuario_controller';
-
-
+import { usuarioController } from '@/controllers/usuario_controller'
+import Pelicula from '@/models/interface_pelicula';
 
 //#region  boton normal
 
 interface InputCustomProps {
-  llamada:string;
+  llamada: string;
   texto: string;
   estilo: number;
-  usuarioData : Usuario_bd;
+  usuarioData?: Usuario_bd;
+  peliculaData?: Pelicula;
 }
 
-function Boton({ llamada, texto, estilo, usuarioData  }: InputCustomProps) {  
+function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCustomProps) {
   const seleccion1 = plantilla_tipo_1[estilo];
   const router = useRouter()
+
   const functions: Mapeo_de_funciones = {
     ir_home_: ir_home,
     registrar_pelicula_: registrar_pelicula,
@@ -37,7 +38,7 @@ function Boton({ llamada, texto, estilo, usuarioData  }: InputCustomProps) {
   function registrar_pelicula() {
     alert('boton desde register');
   };
-
+  // preguntar previamente si el nombre esta en el listado de las peliculas
   function actualizar_pelicula() {
     alert('boton desde actualizar pelicula');
   };
@@ -48,21 +49,20 @@ function Boton({ llamada, texto, estilo, usuarioData  }: InputCustomProps) {
 
   async function ir_home() {
 
-    const usuario: Usuario_bd = {
-      username: usuarioData.username,
-      password: usuarioData.password,
-    };
+    if (usuarioData != undefined) {
+      const usuario: Usuario_bd = {
+        username: usuarioData.username,
+        password: usuarioData.password,
+      };
+      console.log("usuario: ", usuario)
+      const result = await usuarioController.Iniciar_sesion(usuario);
+      console.log("valido para ir home?: ", result)
 
-    console.log("usuario: ", usuario)
-
-    const usuarioController = new Usuario_controller(usuario);
-    const result = await usuarioController.Iniciar_sesion();
-    console.log("result: ",result)
-
-    if(result==true){
-      router.push('/home');
-    } else {
-      alert("Credenciales no válidas.")
+      if (result == true) {
+        router.push('/home');
+      } else {
+        alert("Credenciales no válidas.")
+      }
     }
   }
 
@@ -79,13 +79,13 @@ function Boton({ llamada, texto, estilo, usuarioData  }: InputCustomProps) {
 
 //#region boton con imagen
 function ImageButton({ llamada, ruta }: ImageButtonProps) {
-
+  console.log("llamada: ", llamada)
 
   function default_on_click() {
     alert('Botón presionado');
   };
   function ver_peliculas() {
-    alert('Boton con imagen desde el home');
+    console.log('Boton con imagen desde el home');
   };
   function cargar_imagen() {
     alert('Boton con imagen desde register');
@@ -102,6 +102,11 @@ function ImageButton({ llamada, ruta }: ImageButtonProps) {
   }
 
   let funcion = functions[llamada] || default_on_click;
+
+  if (ruta.startsWith("/") == false) {
+    console.log("ruta no valida colocanco imagen por defecto...")
+    ruta = "/testing.png";
+  }
 
   return (
     <Button onClick={funcion} style={plantilla_boton}>

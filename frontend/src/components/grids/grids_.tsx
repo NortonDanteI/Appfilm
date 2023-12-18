@@ -9,7 +9,7 @@ function Grid1({ Data }: Grid_props) {
     <Grid style={grilla} spacing={1} container>
       {Data.map((pelicula) => (
         <Grid style={elemento} item xs={12} sm={6} md={4} lg={3} key={pelicula.id}>
-          <CustomCard llamada='ver_peliculas' pelicula={pelicula} estilo={0}/>
+          <CustomCard llamada='ver_peliculas_' pelicula={pelicula} estilo={0}/>
         </Grid>
       ))}
     </Grid>
