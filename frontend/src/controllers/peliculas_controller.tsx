@@ -1,29 +1,38 @@
 
-import Pelicula from "@/models/interface_pelicula";
+import { Pelicula, PeliculaDB, Response_json } from "@/models/interface_pelicula";
+import { Usuario_bd } from "@/models/interface_usuario";
 import { Pelicula_model } from "@/models/pelicula_model";
+import { Usuario_model } from "@/models/usuario_model";
+import { usuario_controller_singleton } from "./usuario_controller";
 
 class Pelicula_controller {
   private pelicula_model: Pelicula_model;
   private peliculas: Pelicula[] = [];
-  
+
   constructor() {
     console.log("Pelicula_controller...");
     this.pelicula_model = new Pelicula_model();
   }
 
-  async Traer_peliculas(token: string): Promise<boolean> {
+  async Traer_peliculas(): Promise<boolean> {
     console.log("Pelicula_controller; FUNCION: Traer_peliculas()");
     try {
-      const response: Response = await this.pelicula_model.Cargar_peliculas(token);
-      const data = await response.json();
-      console.log("data.resultado: ", data.resultado);
-      this.peliculas = data.resultado;
-      if (data.success === true) {
-        console.log("Se han traido exitosamente las peliculas.");
-        return true;
+      let token = this.call_token()
+      if(token==""){
+        return false
       } else {
-        console.log("Error al traer peliculas. ");
-        return false;
+        const response: Response = await this.pelicula_model.Cargar_peliculas(token);
+        const response_json: Response_json = await response.json();
+        console.log("response_json: ", response_json)
+        this.custom_parser(response_json)
+  
+        if (response_json.success === true) {
+          console.log("Se han traido exitosamente las peliculas.");
+          return true;
+        } else {
+          console.log("Error al traer peliculas. ");
+          return false;
+        }
       }
     } catch (error) {
       console.error("Error al intentar traer peliculas: ", /*error*/);
@@ -31,15 +40,55 @@ class Pelicula_controller {
     }
   }
 
-  get_peliculas(){
+  custom_parser(response_json: Response_json) {
+    let pelicula_db: PeliculaDB[] = response_json.resultado;
+
+    for (let i = 0; i < pelicula_db.length; i++) {
+      const aux_pelicula = pelicula_db[i];
+
+      let aux_parser: Pelicula = {
+        id: aux_pelicula.id,
+        ruta: aux_pelicula.ruta || "",
+        nombre: aux_pelicula.nombre,
+        sinopsis: aux_pelicula.sinopsis || "",
+        anio_lanzamiento: aux_pelicula.anio_lanzamiento || 0,
+      };
+
+      this.peliculas[i] = aux_parser;
+    }
+    console.log("this.peliculas: ", this.peliculas);
+  }
+
+  get_peliculas() {
     return this.peliculas
   }
 
   async Actualizar_pelicula(pelicula: Pelicula): Promise<boolean> {
     console.log("Usuario_controller; FUNCION: Actualizar_pelicula()");
-    //const result : boolean = await this.pelicula_model.actualizar(pelicula);
-    //return result
-    return true;
+    try {
+      let token = this.call_token()
+      if (token != "") {
+        const response: Response = await this.pelicula_model.Update_peliculas(token, pelicula);
+        const response_json: Response_json = await response.json();
+        console.log("response_json: ", response_json)
+        this.custom_parser(response_json)
+
+        if (response_json.success === true) {
+          console.log("Se han traido exitosamente las peliculas.");
+          return true;
+        } else {
+          console.log("Error al traer peliculas. ");
+          return false;
+        }
+      } else {
+        console.log("token no válido...")
+        return false
+      }
+
+    } catch (error) {
+      console.error("Error al intentar traer peliculas: ", /*error*/);
+      return false;
+    }
   }
 
   async Borrar_pelicula(pelicula: Pelicula): Promise<boolean> {
@@ -54,6 +103,23 @@ class Pelicula_controller {
     //const result : boolean = await this.pelicula_model.subir(pelicula);
     //return result
     return true;
+  }
+
+  call_token(): string {
+    var user_model: Usuario_model = usuario_controller_singleton.obtenerUsuarioModel();
+    let data: Usuario_bd | null = user_model.get_user();
+    if (data != null) {
+      let token: string | undefined = data.token
+      if (token != undefined) {
+        return token
+      } else {
+        console.log("El token no esta definido...")
+        return ""
+      }
+    } else {
+      console.log("No hay usuario almacenado en el localstore...")
+      return ""
+    }
   }
 }
 

@@ -7,8 +7,9 @@ import { ImageButtonProps, Mapeo_de_funciones } from './interface';
 import { plantilla_tipo_1, plantilla_boton } from './b_style'
 import { useRouter } from 'next/navigation';
 import { Usuario_bd } from '@/models/interface_usuario';
-import { usuarioController } from '@/controllers/usuario_controller'
-import Pelicula from '@/models/interface_pelicula';
+import { usuario_controller_singleton } from '@/controllers/usuario_controller'
+import {Pelicula} from '@/models/interface_pelicula';
+import { usePeliculaController } from '@/controllers/pelicula_context';
 
 //#region  boton normal
 
@@ -23,7 +24,8 @@ interface InputCustomProps {
 function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCustomProps) {
   const seleccion1 = plantilla_tipo_1[estilo];
   const router = useRouter()
-
+  let peliculaController = usePeliculaController();
+  
   const functions: Mapeo_de_funciones = {
     ir_home_: ir_home,
     registrar_pelicula_: registrar_pelicula,
@@ -38,9 +40,15 @@ function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCusto
   function registrar_pelicula() {
     alert('boton desde register');
   };
-  // preguntar previamente si el nombre esta en el listado de las peliculas
-  function actualizar_pelicula() {
-    alert('boton desde actualizar pelicula');
+
+  async function actualizar_pelicula() {
+    console.log("peliculaData: ",peliculaData)
+
+    if(peliculaData!=undefined){
+      let resultado: boolean = await peliculaController.Actualizar_pelicula(peliculaData);
+      console.log("Se ha actualizado correctamente la pelicula: ", resultado)
+    }
+
   };
 
   function borrar_pelicula() {
@@ -55,7 +63,7 @@ function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCusto
         password: usuarioData.password,
       };
       console.log("usuario: ", usuario)
-      const result = await usuarioController.Iniciar_sesion(usuario);
+      const result = await usuario_controller_singleton.Iniciar_sesion(usuario);
       console.log("valido para ir home?: ", result)
 
       if (result == true) {
@@ -79,7 +87,6 @@ function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCusto
 
 //#region boton con imagen
 function ImageButton({ llamada, ruta }: ImageButtonProps) {
-  console.log("llamada: ", llamada)
 
   function default_on_click() {
     alert('Botón presionado');

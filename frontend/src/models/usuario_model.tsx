@@ -30,27 +30,33 @@ export class Usuario_model {
     }
   }
 
+  public clean_local(): boolean {
+    console.log("MODEL: Usuario_model; FUNCTION: clean_local()");
+    localStorage.removeItem('usuario');
+    let local: Usuario_bd | null = this.get_user()
+    if(local == null){
+      return true
+    } else {
+      return false
+    }
+  }
+
   public save_user(usuario: Usuario_bd): void {
     console.log("MODEL: Usuario_model; FUNCTION: save_user()");
     this.datos = usuario;
     const usuarioJSON = JSON.stringify(this.datos);
     localStorage.setItem('usuario', usuarioJSON);
-
+    let local: Usuario_bd | null = this.get_user()
+    console.log("datos guardados: ", local)
   }
 
   public get_user(): Usuario_bd | null {
     console.log("MODEL: Usuario_model; FUNCTION: get_user()");
-    const usuarioJSONStored : string | null = localStorage.getItem('usuario');
-    console.log("usuarioJSONStored: ", usuarioJSONStored)
+    const usuarioJSONStored: string | null = localStorage.getItem('usuario');
     if (usuarioJSONStored) {
       // Parsear la cadena JSON de nuevo a un objeto Usuario_bd
       const usuarioStored: Usuario_bd = JSON.parse(usuarioJSONStored);
-      console.log(usuarioStored.username);
-      console.log(usuarioStored.password);
-      console.log(usuarioStored.rol);
-      console.log(usuarioStored.token);
-      console.log(usuarioStored.id);
-
+      console.log("data del local username: ",usuarioStored.username ,"| token: ", usuarioStored.token);
       return usuarioStored
     } else {
       console.log('No se encontró información del usuario en localStorage');

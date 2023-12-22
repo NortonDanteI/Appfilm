@@ -1,6 +1,5 @@
 // app/layout.tsx
 import { roboto } from '@/fuentes/font';
-//import style from './style.module.css';
 import './style.css';
 import React from 'react';
 
@@ -14,7 +13,7 @@ export const metadata = {
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className={roboto.className}>    
+      <body className={roboto.className}>
           {children}
       </body>
     </html>

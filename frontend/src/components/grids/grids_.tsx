@@ -1,8 +1,12 @@
 import React from 'react';
-import { Grid_props } from './interface';
 import { Grid} from '@mui/material';
 import {grilla, elemento} from './style'
 import { CustomCard } from '../cards/a_cards';
+import {Pelicula} from "@/models/interface_pelicula";
+
+interface Grid_props {
+  Data:Pelicula [];
+}
 
 function Grid1({ Data }: Grid_props) {
   return (

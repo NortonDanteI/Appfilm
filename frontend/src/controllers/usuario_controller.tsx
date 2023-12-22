@@ -1,23 +1,25 @@
 import { Response_login, Usuario_bd } from "@/models/interface_usuario";
 import { Usuario_model } from "@/models/usuario_model";
 
-export class Usuario_controller {
-  private static instancia: Usuario_controller | null = null;
-  private usuarioModel: Usuario_model | undefined;
+export class Usuario_controller_singleton {
+  private static instancia: Usuario_controller_singleton | null = null;
+  private usuarioModel: Usuario_model;
 
   private constructor() {
     console.log("Usuario_controller...");
+    let  usuario: Usuario_bd = { username: "", password: "" };
+    this.usuarioModel = new Usuario_model(usuario);
   }
 
   // Método para obtener la instancia única o crear una si no existe
-  public static obtenerInstancia(): Usuario_controller {
-    if (!Usuario_controller.instancia) {
-      Usuario_controller.instancia = new Usuario_controller();
+  public static obtenerInstancia(): Usuario_controller_singleton {
+    if (!Usuario_controller_singleton.instancia) {
+      Usuario_controller_singleton.instancia = new Usuario_controller_singleton();
     }
-    return Usuario_controller.instancia;
+    return Usuario_controller_singleton.instancia;
   }
 
-  public obtenerUsuarioModel(): Usuario_model | undefined {
+  public obtenerUsuarioModel(): Usuario_model {
     console.log("Usuario_controller; obtenerUsuarioModel()");
     return this.usuarioModel;
   }
@@ -52,4 +54,4 @@ export class Usuario_controller {
 }
 
 // Exporta la instancia única
-export const usuarioController = Usuario_controller.obtenerInstancia();
+export const usuario_controller_singleton = Usuario_controller_singleton.obtenerInstancia();

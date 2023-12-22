@@ -20,14 +20,19 @@ const actions = {
     action: 'handle_raiz', 
     roles: ['free'] 
   },
-  'POST /crear_tabla': { 
-    action: 'handle_crear_tabla', 
-    roles: ['free'] 
-  },
   'GET /buscar_pelicula_por_nombre': { 
     action: 'handle_buscar_pelicula_por_nombre', 
     roles: ['regular', 'admin'] 
   },
+  'GET /buscar_pelicula_por_id': { 
+    action: 'handle_buscar_pelicula_por_id', 
+    roles: ['regular', 'admin'] 
+  },
+  'GET /imprimir_registros': { 
+    action: 'handle_imprimir_registros', 
+    roles: ['admin'] 
+  },
+  
   'POST /registrar_pelicula': { 
     action: 'handle_registrar_pelicula', 
     roles: ['regular', 'admin']
@@ -36,11 +41,15 @@ const actions = {
     action: 'handle_borrar_tabla', 
     roles: ['admin'] 
   },
-  'GET /imprimir_registros': { 
-    action: 'handle_imprimir_registros', 
-    roles: ['admin'] 
+  'POST /crear_tabla': { 
+    action: 'handle_crear_tabla', 
+    roles: ['free'] 
   },
   
+  'PUT /actualizar_pelicula': { 
+    action: 'handle_actualizar_pelicula', 
+    roles: ['admin'] 
+  },
 };
 
 for (const [key, { action, roles }] of Object.entries(actions)) {

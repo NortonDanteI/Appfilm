@@ -82,6 +82,50 @@ class peliculas_model {
     }
   }
 
+  async actualizar_pelicula(id, ruta, nombre, sinopsis, anio_lanzamiento) {
+    try {
+      let pelicula = await this.buscar_pelicula_por_id(id);
+  
+      if (!pelicula) {
+        throw new Error('Película no encontrada');
+      }
+  
+      if (ruta && ruta !== pelicula.ruta) {
+        pelicula.ruta = ruta;
+      }
+  
+      if (nombre && nombre !== pelicula.nombre) {
+        pelicula.nombre = nombre;
+      }
+  
+      if (sinopsis && sinopsis !== pelicula.sinopsis) {
+        pelicula.sinopsis = sinopsis;
+      }
+  
+      if (anio_lanzamiento && anio_lanzamiento !== pelicula.anio_lanzamiento) {
+        pelicula.anio_lanzamiento = anio_lanzamiento;
+      }
+  
+      await pelicula.save();
+  
+      return pelicula;
+    } catch (error) {
+      console.error('Error al actualizar película:', error.message);
+      throw error;
+    }
+  }
+  
+  async buscar_pelicula_por_id(id) {
+    try {
+      const pelicula = await this.peliculas.findByPk(id)
+      return pelicula;
+    } catch (error) {
+      console.error('Error al buscar pelicula por pk -> id:', error.message);
+      throw error;
+    }
+  }
+
+
   async imprimir_registros() {
     try {
       const registros = await this.peliculas.findAll();
@@ -96,6 +140,8 @@ class peliculas_model {
     }
   }
   
+
+
   async buscar_pelicula_por_nombre(nombre) {
     try {
       const usuario = await this.peliculas.findOne({

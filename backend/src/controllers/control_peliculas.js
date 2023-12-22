@@ -41,6 +41,43 @@ class Control_peliculas {
     }
   }
 
+  async handle_buscar_pelicula_por_id(req, res) {
+    console.log("Control_peliculas; handle_buscar_pelicula_por_id()");
+    try {
+      console.log("Información del body: ", req.body);
+      const { id } = req.body;
+      
+      if (isNaN(id) || id <= 0) {
+        return res.status(400).json({ success: false, mensaje: 'ID inválido. Debe ser un número positivo.' });
+      }
+  
+      const pelicula = await model_peliculas.buscar_pelicula_por_id(id);
+      if (pelicula) {
+        res.status(200).json({ success: true, mensaje: 'Película encontrada', resultado: pelicula });
+      } else {
+        res.status(404).json({ success: false, mensaje: 'Película no encontrada' });
+      }
+    } catch (error) {
+      res.status(500).json({ success: false, mensaje: 'Error al obtener película por ID: ' + error.message });
+    }
+  }
+  
+  async handle_actualizar_pelicula(req, res) {
+    console.log("Control_peliculas; handle_actualizar_pelicula()");
+    try {
+      console.log("Información del body: ", req.body);
+      const { id, ruta, nombre, sinopsis, anio_lanzamiento } = req.body;
+      const pelicula = await model_peliculas.actualizar_pelicula(id, ruta, nombre, sinopsis, anio_lanzamiento);
+      if (pelicula) {
+        res.status(200).json({ success: true, mensaje: 'Película actualizada', resultado: pelicula });
+      } else {
+        res.status(404).json({ success: false, mensaje: 'Película no encontrada o no actualizada' });
+      }
+    } catch (error) {
+      res.status(500).json({ success: false, mensaje: 'Error al actualizar película por id: ' + error.message });
+    }
+  }
+  
   async handle_crear_tabla(req, res) {
     console.log("Control_peliculas; handle_crear_tabla()")
     try {
