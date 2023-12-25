@@ -19,7 +19,7 @@ function Dinamico({ params}: Props) {
     const peliculaController = usePeliculaController();
     let peliculas: Pelicula[] = peliculaController.get_peliculas();
     let movie = peliculas.find(m => m.id === pos);
-
+    console.log("pelicula encontrada: ", movie)
     if(movie!= undefined){
       return movie
     } else {
@@ -49,7 +49,7 @@ function Dinamico({ params}: Props) {
           </div>
           <div className={style.boton}>
             <Boton llamada={'actualizar_pelicula_'} texto="Actualizar" estilo={2} peliculaData={peli} />
-            <Boton llamada={'borrar_pelicula_'} texto="Eliminar" estilo={2} />
+            <Boton llamada={'borrar_pelicula_'} texto="Eliminar" estilo={2} peliculaData={peli} />
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 // app/components/card/card.tsx
+"use client"
 import React from 'react';
 import { Typography } from '@mui/material';
 import { ImageButton } from '../botones/a_Botones';
@@ -22,7 +23,7 @@ export interface Props1 {
   onChange: (pelicula: Pelicula) => void;
 }
 
-function CustomCard_register({ onChange,llamada, pelicula }: Props1) {
+function CustomCard_register({llamada, pelicula, onChange }: Props1) {
   let defecto_nombre = "Ingresa un nombre"
   let defecto_sinopsis = "Ingresa una sinopsis"
  

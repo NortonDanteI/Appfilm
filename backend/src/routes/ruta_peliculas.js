@@ -45,6 +45,10 @@ const actions = {
     action: 'handle_crear_tabla', 
     roles: ['free'] 
   },
+  'DELETE /borrar_pelicula/:id': {
+    action: 'handle_borrar_pelicula',
+    roles: ['admin'],
+  },
   
   'PUT /actualizar_pelicula': { 
     action: 'handle_actualizar_pelicula', 

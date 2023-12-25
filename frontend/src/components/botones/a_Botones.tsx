@@ -37,8 +37,14 @@ function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCusto
     alert('Botón presionado');
   };
 
-  function registrar_pelicula() {
-    alert('boton desde register');
+  async function registrar_pelicula() {
+    if(peliculaData!=undefined){
+      let resultado: boolean = await peliculaController.Registrar_pelicula(peliculaData);
+      console.log("Se ha registrado correctamente la pelicula: ", resultado)
+      if(resultado==true){
+        router.push('/home');
+      }
+    }
   };
 
   async function actualizar_pelicula() {
@@ -51,8 +57,16 @@ function Boton({ llamada, texto, estilo, usuarioData, peliculaData }: InputCusto
 
   };
 
-  function borrar_pelicula() {
-    alert('boton desde borrar pelicula');
+  async function borrar_pelicula() {
+    console.log("peliculaData: ",peliculaData)
+
+    if(peliculaData!=undefined){
+      let resultado: boolean = await peliculaController.Borrar_pelicula(peliculaData);
+      console.log("Se ha borrado correctamente la pelicula: ", resultado)
+      if(resultado==true){
+        router.push('/home');
+      }
+    }
   };
 
   async function ir_home() {

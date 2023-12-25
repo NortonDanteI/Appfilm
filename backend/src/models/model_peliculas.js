@@ -114,6 +114,24 @@ class peliculas_model {
       throw error;
     }
   }
+
+  async borrar_pelicula(id) {
+    try {
+      let pelicula = await this.buscar_pelicula_por_id(id);
+  
+      if (!pelicula) {
+        throw new Error('Película no encontrada');
+      }
+  
+      await pelicula.destroy();
+  
+      return { mensaje: 'Película eliminada correctamente' };
+    } catch (error) {
+      console.error('Error al borrar película:', error.message);
+      throw error;
+    }
+  }
+  
   
   async buscar_pelicula_por_id(id) {
     try {

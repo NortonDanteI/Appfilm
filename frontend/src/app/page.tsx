@@ -5,6 +5,7 @@ import { Input_custom } from '../components/inputs/a_inputs_';
 import { Tipografia1 } from '@/components/typographys/a_typographys_';
 import React, { useEffect, useRef, useState } from 'react';
 import Login_guard from '@/guards/login_guard';
+import Provider_pelicula from '@/components/providers/provider_pelicula';
 
 // Estado para manejar los datos del usuario
 /*---------------------------------------- */
@@ -30,18 +31,20 @@ function Login() {
   }, [])
 
   return (
-    <Login_guard >
-      <div className="fondo">
-        <div className="contenedor_centrado">
-          <div className="formulario">
-            <Tipografia1 texto="AppFilm" estilo={1} />
-            <Input_custom defecto='nombre de usuario' texto={username} estilo={0} onChange={handleUsernameChange} />
-            <Input_custom defecto='contraseña' texto={password} estilo={0} onChange={handlePasswordChange} />
-            <Boton llamada='ir_home_' texto="Iniciar sesión" estilo={1} usuarioData={{ username, password, rol: 'Regular' }} />
+    <Provider_pelicula>
+      <Login_guard >
+        <div className="fondo">
+          <div className="contenedor_centrado">
+            <div className="formulario">
+              <Tipografia1 texto="AppFilm" estilo={1} />
+              <Input_custom defecto='nombre de usuario' texto={username} estilo={0} onChange={handleUsernameChange} />
+              <Input_custom defecto='contraseña' texto={password} estilo={0} onChange={handlePasswordChange} />
+              <Boton llamada='ir_home_' texto="Iniciar sesión" estilo={1} usuarioData={{ username, password, rol: 'Regular' }} />
+            </div>
           </div>
         </div>
-      </div>
-    </Login_guard>
+      </Login_guard>
+    </Provider_pelicula>
   );
 }
 

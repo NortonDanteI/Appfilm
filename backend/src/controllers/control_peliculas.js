@@ -77,6 +77,21 @@ class Control_peliculas {
       res.status(500).json({ success: false, mensaje: 'Error al actualizar película por id: ' + error.message });
     }
   }
+
+  async handle_borrar_pelicula(req, res) {
+    console.log("Control_peliculas; handle_borrar_pelicula()");
+    try {
+      const { id } = req.params; // Obtén el ID desde los parámetros de la ruta
+      const pelicula = await model_peliculas.borrar_pelicula(id);
+      if (pelicula) {
+        res.status(200).json({ success: true, mensaje: 'Película borrada', resultado: pelicula });
+      } else {
+        res.status(404).json({ success: false, mensaje: 'Película no encontrada o no borrada' });
+      }
+    } catch (error) {
+      res.status(500).json({ success: false, mensaje: 'Error al borrar película por id: ' + error.message });
+    }
+  }
   
   async handle_crear_tabla(req, res) {
     console.log("Control_peliculas; handle_crear_tabla()")
