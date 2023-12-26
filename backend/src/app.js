@@ -4,6 +4,7 @@ import db_config from './config/config_db.js'
 import rutas_esquemas from './routes/ruta_esquemas.js';
 import rutas_usuario from './routes/ruta_usuarios.js';
 import rutas_peliculas from './routes/ruta_peliculas.js';
+import rutas_imagenes from './routes/ruta_imagenes.js';
 import mysql from 'mysql2';
 
 console.log("Iniciando... app.js")
@@ -46,6 +47,8 @@ function iniciarServidor() {
   app.use('/esquema',rutas_esquemas.router_esquemas)
   app.use('/api/usuario', rutas_usuario.router_usuario);
   app.use('/api/peliculas', rutas_peliculas.router_peliculas)
+  app.use('/api/imagenes', rutas_imagenes.router_imagenes)
+  app.use(express.static('public'))
 
   const PORT = 4000;
   app.listen(PORT, () => {

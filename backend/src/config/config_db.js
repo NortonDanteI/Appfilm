@@ -3,9 +3,14 @@ import path from 'path';
 import dotenv from 'dotenv';
 import {Sequelize } from 'sequelize';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+// Obtiene la ruta del archivo actual (__filename) utilizando la función fileURLToPath y el objeto import.meta.url.
+const filename = fileURLToPath(import.meta.url);
+
+// Obtiene el directorio del archivo actual (__dirname) utilizando la función dirname del módulo 'path'.
+const dirname = path.dirname(filename);
+
+// Carga las variables de entorno desde el archivo '.env' en el directorio actual.
+dotenv.config({ path: path.join(dirname, '../../.env') });
 
 const config = {
   database: process.env.DB_NAME,

@@ -4,7 +4,7 @@ import './style.css';
 import React from 'react';
 
 export const metadata = {
-  title: "AppFilm - Inicio de seión",
+  title: "AppFilm",
   description: "Esta es la pagina principal de AppFilm",
   keywords: "CRUD, AppFilm, películas",
   creator: [{ name: 'Dante Irarrázabal' }],
