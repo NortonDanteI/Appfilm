@@ -3,6 +3,8 @@ import React, { MouseEvent } from 'react';
 interface ImageButtonProps {
   llamada:string;
   ruta: string;
+  key?:number;
+  onFileChange?: (file: File) => void;
 }
 
 interface RoundedButtonProps {

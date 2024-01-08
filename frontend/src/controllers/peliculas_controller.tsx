@@ -75,6 +75,33 @@ class Pelicula_controller {
         this.custom_parser(response_json)
 
         if (response_json.success === true) {
+          console.log("Se ha actualizado exitosamente la película.");
+          return true;
+        } else {
+          console.log("Error al actualizar la pelicula. ");
+          return false;
+        }
+      } else {
+        console.log("token no válido...")
+        return false
+      }
+
+    } catch (error) {
+      console.error("Error al intentar traer peliculas: ", /*error*/);
+      return false;
+    }
+  }
+
+  async Subir_caratula(formData: FormData): Promise<boolean> {
+    console.log("Usuario_controller; FUNCION: Subir_caratula()");
+    try {
+      let token = this.call_token()
+      if (token != "") {
+        const response: Response = await this.pelicula_model.Post_caratula(token, formData);
+        const response_json: Response_json = await response.json();
+        console.log("response_json: ", response_json)
+  
+        if (response_json.success === true) {
           console.log("Se han traido exitosamente las peliculas.");
           return true;
         } else {
@@ -87,7 +114,7 @@ class Pelicula_controller {
       }
 
     } catch (error) {
-      console.error("Error al intentar traer peliculas: ", /*error*/);
+      console.error("Error al intentar subir caratula pelicula: ", error);
       return false;
     }
   }

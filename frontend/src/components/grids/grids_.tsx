@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid} from '@mui/material';
 import {grilla, elemento} from './style'
-import { CustomCard } from '../cards/a_cards';
+import { CustomCard } from '../cards/a_custom_card';
 import {Pelicula} from "@/models/interface_pelicula";
 
 interface Grid_props {

@@ -3,7 +3,7 @@ import express from 'express';
 import controlador_imagenes from '../controllers/control_imagenes.js';
 import permiso_administrador from '../middleware/middleware_administrador.js';
 import permiso_regular from '../middleware/middleware_regular.js';
-import middleware from '../middleware/middleware_imagen.js';
+import middleware_image from '../middleware/middleware_imagen.js';
 
 console.log("Iniciando... rutas de imagenes");
 const router_imagenes = express.Router();
@@ -29,7 +29,7 @@ for (const [key, { action, roles }] of Object.entries(actions)) {
 
   if (permiso !== 'free') {
     if (ruta === '/subida_de_imagen') {
-      router_imagenes[metodo.toLowerCase()](ruta, permiso, middleware.imagen, function (req, res) {
+      router_imagenes[metodo.toLowerCase()](ruta, permiso,middleware_image.carga_single,  function (req, res) {
         controlador_imagenes[action](req, res);
       });
     } else {

@@ -21,9 +21,10 @@ export interface Props1 {
   llamada: string;
   pelicula: Pelicula;
   onChange: (pelicula: Pelicula) => void;
+  onFileChange:(file:File) =>void;
 }
 
-function CustomCard_register({llamada, pelicula, onChange }: Props1) {
+function CustomCard_register({llamada, pelicula, onChange, onFileChange  }: Props1) {
   let defecto_nombre = "Ingresa un nombre"
   let defecto_sinopsis = "Ingresa una sinopsis"
  
@@ -48,10 +49,14 @@ function CustomCard_register({llamada, pelicula, onChange }: Props1) {
     e.target.value = nuevoNumero.toString();
   }
 
+  function handleFileChange(file: File) {
+    onFileChange(file);
+  }
+
   return (
     <article className={style.div_card}>
       <div className={style.div_boton}>
-        <ImageButton llamada={llamada} ruta={pelicula.ruta || ''} />
+        <ImageButton llamada={llamada} ruta={pelicula.ruta || ''} onFileChange={handleFileChange} />
       </div>
       <div className={style.div_info}>
         <Input_custom_register defecto={defecto_nombre} texto={peli.nombre} estilo={2} onChange={handleNombreChange} />
@@ -62,7 +67,7 @@ function CustomCard_register({llamada, pelicula, onChange }: Props1) {
   );
 }
 
-function CustomCard({ llamada, pelicula, estilo }: Props) {
+function CustomCard({ llamada, pelicula, estilo}: Props) {
   const seleccion1 = plantilla_tipo_1[estilo];
   const seleccion2 = plantilla_tipo_2[estilo];
   const seleccion3 = plantilla_tipo_3[estilo];
@@ -73,7 +78,7 @@ function CustomCard({ llamada, pelicula, estilo }: Props) {
   return (
     <article className={style.div_card}>
       <Link className={style.div_boton} href={`/home/${pelicula.id}`}>
-        <ImageButton llamada={llamada} ruta={ruta_} />
+        <ImageButton llamada={llamada} ruta={ruta_}/>
       </Link>
       <div className={style.div_info}>
         <Typography justifyContent={"center"} alignItems={"center"} textAlign={"center"} variant="h6" style={seleccion1}>

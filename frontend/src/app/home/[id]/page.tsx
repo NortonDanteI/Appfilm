@@ -3,7 +3,7 @@
 import React from 'react';
 import style from './style.module.css';
 import { Boton } from '@/components/botones/a_Botones';
-import { CustomCard_register } from '@/components/cards/a_cards';
+import { CustomCard_register } from '@/components/cards/a_custom_card';
 import { Props } from './interface';
 import { useParams } from 'next/navigation';
 import { usePeliculaController } from '@/controllers/pelicula_context';
@@ -34,22 +34,28 @@ function Dinamico({ params}: Props) {
   }
 
   let pelicula_inicial = defecto()
+
   const [peli, setPeli] = useState<Pelicula>(pelicula_inicial); // esto es asincrono y renderiza todo el componente cuando se ejecuta.
+  const [archivo, setArchivo] = useState<File | undefined>(undefined);
 
   function handlePeliChange(nuevaPelicula: Pelicula) {
     setPeli(nuevaPelicula);
   }
 
+  function handleFileChange(nuevoArchivo: File) {
+    setArchivo(nuevoArchivo);
+  }
+  //deberia mandar el archivo desde aca al componente boton actualizar para asi poder subir la imagen....
   return (
     <>
       <div className={style.fondo}>
         <div className={style.contenedor_centrado}>
           <div className={style.tarjeta}>
-            <CustomCard_register llamada='editar_imagen_' pelicula={peli} onChange={handlePeliChange}  />
+            <CustomCard_register llamada='editar_imagen_' pelicula={peli} onChange={handlePeliChange} onFileChange={handleFileChange}  /> 
           </div>
           <div className={style.boton}>
-            <Boton llamada={'actualizar_pelicula_'} texto="Actualizar" estilo={2} peliculaData={peli} />
-            <Boton llamada={'borrar_pelicula_'} texto="Eliminar" estilo={2} peliculaData={peli} />
+            <Boton llamada={'actualizar_pelicula_'} texto="Actualizar" estilo={2} peliculaData={peli} peliculaData_default={peli} archivo={archivo} />
+            <Boton llamada={'borrar_pelicula_'} texto="Eliminar" estilo={2} peliculaData={peli} archivo={archivo} />
           </div>
         </div>
       </div>

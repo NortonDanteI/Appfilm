@@ -2,7 +2,7 @@
 import React from 'react';
 import style from './style.module.css';
 import { Boton } from '@/components/botones/a_Botones';
-import { CustomCard_register } from '@/components/cards/a_cards';
+import { CustomCard_register } from '@/components/cards/a_custom_card';
 import { usePeliculaController } from '@/controllers/pelicula_context';
 import { Pelicula } from '../../../models/interface_pelicula';
 import { useState } from 'react';
@@ -23,8 +23,14 @@ function Registrar() {
   let pelicula_inicial: Pelicula = defecto()
 
   const [peli, setPeli] = useState<Pelicula>(pelicula_inicial); // esto es asincrono y renderiza todo el componente cuando se ejecuta.
+  const [archivo, setArchivo] = useState<File | undefined>(undefined);
+
   function handlePeliChange(nuevaPelicula: Pelicula) {
     setPeli(nuevaPelicula);
+  }
+
+  function handleFileChange(nuevoArchivo: File) {
+    setArchivo(nuevoArchivo);
   }
 
   return (
@@ -32,7 +38,7 @@ function Registrar() {
       <div className={style.fondo}>
         <div className={style.contenedor_centrado}>
           <div className={style.tarjeta}>
-            <CustomCard_register llamada='cargar_imagen_' pelicula={peli} onChange={handlePeliChange} />
+            <CustomCard_register llamada='editar_imagen_' pelicula={peli} onChange={handlePeliChange} onFileChange={handleFileChange}  /> 
           </div>
           <div className={style.boton}>
             <Boton llamada={'registrar_pelicula_'} texto="Registrar" estilo={2} peliculaData={peli}/>

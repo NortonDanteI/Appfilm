@@ -5,11 +5,44 @@ export class Pelicula_model {
   private backendUrl_UPDATE: string = "http://localhost:4000/api/peliculas/actualizar_pelicula";
   private backendUrl_DELETE: string = "http://localhost:4000/api/peliculas/borrar_pelicula";
   private backendUrl_REGISTER: string = "http://localhost:4000/api/peliculas/registrar_pelicula";
+  private backendUrl_POST: string = "http://localhost:4000/api/imagenes/subida_de_imagen"
 
   constructor() {
     console.log("MODEL: Pelicula...")
   }
 
+  async Post_caratula(token: string, formData: FormData): Promise<Response> {
+    console.log("MODEL: Pelicula_model; FUNCTION: Post_caratula()");
+    console.log("token: ", token);
+    // Mostrar el contenido de FormData en la consola
+    console.log("--------------");
+    console.log("Contenido de FormData:");
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+    console.log("--------------");
+  
+    const cabecera = {
+      'Authorization': `Bearer ${token}`,
+    };
+  
+    const metodo = 'POST';
+  
+    try {
+      const respuesta: Response = await fetch(this.backendUrl_POST, { method: metodo, headers: cabecera, body: formData });
+      console.log("response: ", respuesta);
+  
+      if (!respuesta.ok) {
+        throw new Error(`Error al subir caratula: ${respuesta.status} - ${respuesta.statusText}`);
+      } else {
+        return respuesta;
+      }
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+      throw new Error("Error al subir caratula pelicula");
+    }
+  }
+  
   async Cargar_peliculas(token: string): Promise<Response> {
     console.log("MODEL: Pelicula_model; FUNCTION: Cargar_peliculas()");
     console.log("token: ", token)
